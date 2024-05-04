@@ -112,6 +112,18 @@ export default function Home() {
           </u>
         </div>
       )}
+      {loading && (
+        <div
+          className="text-black font-bold mt-2"
+          style={{
+            padding: "10px",
+            borderRadius: "10px",
+            backgroundColor: "#ffffff",
+          }}
+        >
+          please wait we are creating a Short-Url for you...
+        </div>
+      )}
       <ToastContainer />
     </main>
   );

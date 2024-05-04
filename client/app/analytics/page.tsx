@@ -6,23 +6,30 @@ const Analytics = () => {
   const [shortUrl, setShortUrl] = useState("");
   const [clickCount, setClickCount] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
-
-  const getAnalytics = async (e: any) => {
-    e.preventDefault();
-    const url = e.currentTarget.username.value;
-    const id = url.split("/");
-    setShortUrl(id[id.length - 1]);
-    console.log("short url is ");
-    console.log(shortUrl)
+  const [loading, setLoading] = useState(false);
+  const getAnalytics = async (url: string) => {
+    setLoading(true);
     try {
-      const response = await axios.get(`https://su.weblancerdev.com/${shortUrl}/data`, {
-        url: shortUrl,
-      });
+      const response = await axios.get(
+        `https://su.weblancerdev.com/${url}/data`,
+        {
+          url: url,
+        }
+      );
+      console.log(response);
       setClickCount(response.data.clicks);
       setErrorMessage("");
     } catch (error) {
       setErrorMessage("Failed to fetch analytics. Please try again later.");
     }
+    setLoading(false);
+  };
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    console.log("handle submit called");
+    const url = e.currentTarget.username.value.split("/")[3];
+    getAnalytics(url);
   };
 
   return (
@@ -46,7 +53,7 @@ const Analytics = () => {
       </h2>
       <form
         className="w-full mt-2 flex items-center justify-center"
-        onSubmit={getAnalytics}
+        onSubmit={handleSubmit}
       >
         <input
           type="search"
@@ -76,12 +83,24 @@ const Analytics = () => {
           {errorMessage}
         </div>
       )}
-      {shortUrl && clickCount !== null && !errorMessage && (
+      {clickCount !== null && !errorMessage && (
         <div
           className="bg-white text-black font-bold mt-2"
           style={{ padding: "10px", borderRadius: "10px" }}
         >
           Clicks for Short URL: {clickCount}
+        </div>
+      )}
+      {loading && (
+        <div
+          className="text-black font-bold mt-2"
+          style={{
+            padding: "10px",
+            borderRadius: "10px",
+            backgroundColor: "#FFD700",
+          }}
+        >
+          please wait we are fetching the data...
         </div>
       )}
     </main>
