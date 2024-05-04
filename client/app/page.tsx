@@ -16,7 +16,7 @@ export default function Home() {
     setLongUrl(url);
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:8000/", {
+      const res = await axios.post("https://su.weblancerdev.com/", {
         url: url,
       });
       const data: any = res.data;
@@ -29,7 +29,7 @@ export default function Home() {
 
   const copyToClipboard = async () => {
     try {
-      await navigator.clipboard.writeText(`http://localhost:8000/${shortUrl}`);
+      await navigator.clipboard.writeText(`https://su.weblancerdev.com/${shortUrl}`);
       toast.success("Link copied to clipboard!");
     } catch (error) {
       console.error("Failed to copy to clipboard:", error);
@@ -98,7 +98,7 @@ export default function Home() {
             style={{ cursor: "pointer" }}
             onClick={copyToClipboard}
           >
-            {`http://localhost:8000/${shortUrl}`}
+            {`https://su.weblancerdev.com/${shortUrl}`}
           </u>
         </div>
       )}

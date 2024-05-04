@@ -21,6 +21,7 @@ shortUrlRouter.get("/:shortUrl", async (req, res) => {
   res.redirect(shortUrl.full);
 });
 shortUrlRouter.get("/:shortUrl/data", async (req, res) => {
+  //console.log(req.params.shortUrl);
   const shortUrl = await ShortUrlSchema.findOne({ short: req.params.shortUrl });
   if (shortUrl == null) return res.sendStatus(404);
   res.json(shortUrl);

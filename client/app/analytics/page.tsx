@@ -1,15 +1,30 @@
 "use client";
 import { useState, useEffect } from "react";
 import axios from "axios";
+
 const Analytics = () => {
   const [shortUrl, setShortUrl] = useState("");
-  const getAnalytics = async (e:any) => {
+  const [clickCount, setClickCount] = useState(0);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const getAnalytics = async (e: any) => {
     e.preventDefault();
     const url = e.currentTarget.username.value;
-    setShortUrl(url);
-    const response = await axios.get(`http://localhost:8000/${url}/data`);
-    console.log(response.data);
+    const id = url.split("/");
+    setShortUrl(id[id.length - 1]);
+    console.log("short url is ");
+    console.log(shortUrl)
+    try {
+      const response = await axios.get(`https://su.weblancerdev.com/${shortUrl}/data`, {
+        url: shortUrl,
+      });
+      setClickCount(response.data.clicks);
+      setErrorMessage("");
+    } catch (error) {
+      setErrorMessage("Failed to fetch analytics. Please try again later.");
+    }
   };
+
   return (
     <main className="flex flex-col items-center justify-center min-h-screen p-24">
       <div className="relative z-[-1] flex items-center justify-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
@@ -61,15 +76,12 @@ const Analytics = () => {
           {errorMessage}
         </div>
       )}
-      {shortUrl && !loading && !errorMessage && (
+      {shortUrl && clickCount !== null && !errorMessage && (
         <div
           className="bg-white text-black font-bold mt-2"
           style={{ padding: "10px", borderRadius: "10px" }}
         >
-          The Short Url is:{" "}
-          <u style={{ cursor: "pointer" }} onClick={copyToClipboard}>
-            {`http://localhost:8000/${shortUrl}`}
-          </u>
+          Clicks for Short URL: {clickCount}
         </div>
       )}
     </main>
