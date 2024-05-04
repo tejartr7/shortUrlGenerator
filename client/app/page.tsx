@@ -1,9 +1,9 @@
-'use client'
+"use client";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import Link from "next/link";
 export default function Home() {
   const [shortUrl, setShortUrl] = useState<string>("");
   const [longUrl, setLongUrl] = useState<string>("");
@@ -21,6 +21,8 @@ export default function Home() {
       });
       const data: any = res.data;
       setShortUrl(data?.short);
+      console.log("short url is ");
+      console.log(res);
     } catch (error) {
       setErrorMessage("Failed to generate short URL. Please try again later.");
     }
@@ -29,7 +31,9 @@ export default function Home() {
 
   const copyToClipboard = async () => {
     try {
-      await navigator.clipboard.writeText(`https://su.weblancerdev.com/${shortUrl}`);
+      await navigator.clipboard.writeText(
+        `https://su.weblancerdev.com/${shortUrl}`
+      );
       toast.success("Link copied to clipboard!");
     } catch (error) {
       console.error("Failed to copy to clipboard:", error);
@@ -80,6 +84,15 @@ export default function Home() {
           Generate ShortUrl
         </button>
       </form>
+      <Link
+        className="mt-2 p-4 rounded-lg text-black font-bold text-sm hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-blue-300"
+        href="/analytics"
+        style={{
+          backgroundColor: "#FFD700",
+        }}
+      >
+        Analytics of your Shout-Url
+      </Link>
       {errorMessage && (
         <div
           className="bg-white text-red-500 font-bold mt-2"
@@ -94,10 +107,7 @@ export default function Home() {
           style={{ padding: "10px", borderRadius: "10px" }}
         >
           The Short Url is:{" "}
-          <u
-            style={{ cursor: "pointer" }}
-            onClick={copyToClipboard}
-          >
+          <u style={{ cursor: "pointer" }} onClick={copyToClipboard}>
             {`https://su.weblancerdev.com/${shortUrl}`}
           </u>
         </div>
