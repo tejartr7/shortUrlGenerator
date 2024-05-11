@@ -1,10 +1,9 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
-
 export default function Home() {
   const [shortUrl, setShortUrl] = useState<string>("");
   const [longUrl, setLongUrl] = useState<string>("");
@@ -43,12 +42,12 @@ export default function Home() {
   };
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen p-4 md:p-24">
-      <div className="relative z-[-1] flex items-center justify-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <h1 className="text-5xl my-2 text-center">
-          Generate a Short Url in no time
-        </h1>
-      </div>
+    <main className="flex flex-col items-center justify-center h-screen lg:p-24 p-4">
+      {/* <div className="flex items-center text-center justify-center after:from-sky-200 after:via-blue-200 after:blur-2xl before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] sm:after:w-[240px] "> */}
+      <h1 className="text-5xl my-2 text-center">
+        Generate a Short Url in no time
+      </h1>
+      {/* </div> */}
       <h2 className="text-3xl my-2 text-center">
         A project by{" "}
         <a
@@ -85,6 +84,7 @@ export default function Home() {
           Generate ShortUrl
         </button>
       </form>
+
       <Link
         className="mt-2 p-4 rounded-lg text-black font-bold text-sm hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-blue-300"
         href="/analytics"
