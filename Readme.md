@@ -1,6 +1,6 @@
 **#** **URL Shortener**
 
-![URL Shortener](https://ibb.co/QjcPj23)
+![URL Shortener](https://i.ibb.co/k6y46Rs/image.png)
 
 This is a simple URL shortener application built with Next.js and Tailwind CSS for the frontend, and Node.js with Express.js for the backend.
 
